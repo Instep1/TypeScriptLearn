@@ -201,3 +201,89 @@ type ApiResponse<T> = {
 }
 
 type onClick = (event) => void;
+
+
+//Литералы
+
+type Color = 'red' | 'green' | 'blue';
+type Size = 8 | 16;
+
+const values = {
+    color: 'green'
+} as const;   // as const делает свойства объекта read-only (неизменяемыми)
+
+function paint(color: Color) {
+
+}
+
+paint(values.color)
+
+interface User1 {
+    readonly id: string;
+}
+
+// Шаблонные литералы
+
+type EventName = 'click' | 'change'
+
+type EventHandler = `on$(EventName)`
+
+type UserId = `user_id_$(string)`
+
+
+// generic (обобщения)
+
+interface MetaData {
+
+}
+
+interface User2 {
+    username: string;
+}
+
+interface Article {
+    title: string;
+}
+
+interface ApiResponses<T> {
+    status?: 'error' | 'success';
+    meta?: MetaData;
+    requestId?: string;
+    data: T;
+}
+
+const response: ApiResponses<User2> = {
+    data: {
+        username: 'Maksim'
+    }
+}
+
+const responseFromArticle: ApiResponses<Article> = {
+    data: {
+        title: 'Bam'
+    }
+}
+
+
+interface Tree<T> {
+    id: string;
+    value: T;
+    children: Tree<T>[] | null;
+}
+
+
+const treeNode: Tree<User2> = {
+    id: '10',
+    value: {
+        username: 'Instep'
+    },
+    children: [
+        {
+            id: '11',
+            value: {
+                username: 'Andruxa'
+            },
+            children: null
+        }
+    ]
+}
